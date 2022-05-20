@@ -2,6 +2,7 @@ import { useLocation } from 'react-router-dom';
 import { ListingType } from '../../data';
 import Footer from '../Footer';
 import Navbar from '../Navbar';
+import parse from 'html-react-parser';
 
 const prefixLink = (str: string): string => 'https://' + str;
 
@@ -50,7 +51,7 @@ function ListingPage(): JSX.Element {
           </a>
         </div>
 
-        <p className="titleBox__description">{listing.jobDescription}</p>
+        <p className="titleBox__description">{parse(listing.jobDescription)}</p>
         <a
           href={prefixLink(listing.jobApplicationLink)}
           target="_blank"

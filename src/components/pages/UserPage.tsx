@@ -1,27 +1,14 @@
 import { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import api from '../../api';
 import Context from '../../context';
-import { ListingType } from '../../data';
 import Footer from '../Footer';
 import Listings from '../Listings';
 import Navbar from '../Navbar';
 
 function UserPage(): JSX.Element {
-  const { user, userSetter } = useContext(Context);
+  const { user, userSetter, userListings } = useContext(Context);
   const navigate = useNavigate();
-  const [userListings, setUserListings] = useState<ListingType[]>([]);
-
-  useEffect(() => {
-    (async () => {
-      const token = localStorage.getItem('LIST_JWT');
-      const config = {
-        headers: { 'x-auth-token': token as string },
-      };
-      const data = (await api.get(`/listings/${user?._id}`, config)).data;
-      setUserListings(data);
-    })();
-  }, []);
 
   const logoutHandler = () => {
     localStorage.removeItem('LIST_JWT');
@@ -44,7 +31,12 @@ function UserPage(): JSX.Element {
         </div>
 
         <div className="userPage__listingsBox">
-          <p className="userPage__listingsTitle">My Listings</p>
+          <div className="userPage__addBox">
+            <p className="userPage__listingsTitle">My Listings</p>
+            <Link to="/add-form" className="userPage__btn">
+              Add
+            </Link>
+          </div>
           <Listings listings={userListings} />
         </div>
       </main>

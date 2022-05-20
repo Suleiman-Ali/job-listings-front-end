@@ -8,6 +8,7 @@ import './styles/index.scss';
 import SingIn from './components/pages/SingIn';
 import SignUp from './components/pages/SingUp';
 import UserPage from './components/pages/UserPage';
+import AddForm from './components/pages/AddForm';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -23,6 +24,7 @@ root.render(
           <Route path="/sign-in" element={<SingIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/user/account/:name" element={<UserPage />} />
+          <Route path="/add-form" element={<AddForm />} />
         </Routes>
       </Router>
     </ContextProvider>
