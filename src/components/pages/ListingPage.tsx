@@ -1,5 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import { ListingType } from '../../data';
+import Footer from '../Footer';
+import Navbar from '../Navbar';
 
 const prefixLink = (str: string): string => 'https://' + str;
 
@@ -13,6 +15,7 @@ function ListingPage(): JSX.Element {
 
   return (
     <div className="listingPage">
+      <Navbar />
       <div className="titleBox">
         <p className="titleBox__date">{date}</p>
         <p className="titleBox__title">{listing.jobTitle}</p>
@@ -57,6 +60,7 @@ function ListingPage(): JSX.Element {
           Apply for the job
         </a>
       </div>
+      <Footer />
     </div>
   );
 }

@@ -15,3 +15,9 @@ export type ListingType = {
 
   jobDescription: string;
 };
+
+export type UserType = {
+  _id: string;
+  name: string;
+  email: string;
+};
