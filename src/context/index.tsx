@@ -9,8 +9,9 @@ interface ContextValues {
   userListings: ListingType[];
   user: UserType | undefined;
   userSetter: (user: UserType | undefined) => void;
-  listingsSetter: (newListing: ListingType) => void;
-  userListingsSetter: (newListing: ListingType) => void;
+  addListing: (newListing: ListingType) => void;
+  deleteListing: (listing: ListingType) => void;
+  updateListing: (listing: ListingType) => void;
 }
 
 interface ContextProviderProps {
@@ -30,10 +31,27 @@ export function ContextProvider({
   const [user, setUser] = useState<UserType | undefined>(userInput);
 
   const userSetter = (user: UserType | undefined) => setUser(user);
-  const listingsSetter = (newListing: ListingType) =>
-    setListings((listings) => [newListing, ...listings]);
-  const userListingsSetter = (newListing: ListingType) =>
-    setUserListings((listings) => [newListing, ...listings]);
+
+  const addListing = (newListing: ListingType) => {
+    setListings((lists) => [newListing, ...lists]);
+    setUserListings((lists) => [newListing, ...lists]);
+  };
+
+  const deleteListing = (listing: ListingType) => {
+    setListings((lists) => lists.filter((l) => l._id !== listing._id));
+    setUserListings((lists) => lists.filter((l) => l._id !== listing._id));
+  };
+
+  const updateListing = (listing: ListingType) => {
+    const currentListing = listings.find((l) => l._id === listing._id);
+    const newListing = { ...currentListing, ...listing };
+    setListings((lists) =>
+      lists.map((l) => (l._id === listing._id ? newListing : l))
+    );
+    setUserListings((lists) =>
+      lists.map((l) => (l._id === listing._id ? newListing : l))
+    );
+  };
 
   useEffect(() => {
     (async () => {
@@ -60,9 +78,10 @@ export function ContextProvider({
         listings,
         user,
         userSetter,
-        listingsSetter,
+        addListing,
         userListings,
-        userListingsSetter,
+        deleteListing,
+        updateListing,
       }}
     >
       {children}

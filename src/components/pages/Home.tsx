@@ -18,7 +18,6 @@ function Home(): JSX.Element {
 
 export default Home;
 
-// TODO: CRUD
 // TODO: Protect Routes
 // TODO: Refactor
 // TODO: Other Stuff..

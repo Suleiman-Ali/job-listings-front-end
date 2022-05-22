@@ -37,7 +37,7 @@ function UserPage(): JSX.Element {
               Add
             </Link>
           </div>
-          <Listings listings={userListings} />
+          <Listings listings={userListings} currentPageUser={true} />
         </div>
       </main>
 

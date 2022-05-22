@@ -1,59 +1,67 @@
-import { FormEventHandler, useContext, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { ChangeEvent, FormEventHandler, useContext, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import api from '../../api';
 import Context from '../../context';
 import { JobTypes, ListingType } from '../../data';
 import Footer from '../Footer';
 import Navbar from '../Navbar';
 
-function AddForm(): JSX.Element {
-  const { user, addListing } = useContext(Context);
+function UpdateForm(): JSX.Element {
+  const { updateListing, user } = useContext(Context);
   const navigate = useNavigate();
-  const [selectedType, setSelectedType] = useState<string>(JobTypes[0]);
-  const title = useRef() as React.MutableRefObject<HTMLInputElement>;
-  const companyName = useRef() as React.MutableRefObject<HTMLInputElement>;
-  const websiteLink = useRef() as React.MutableRefObject<HTMLInputElement>;
-  const applicationLink = useRef() as React.MutableRefObject<HTMLInputElement>;
-  const category = useRef() as React.MutableRefObject<HTMLInputElement>;
-  const region = useRef() as React.MutableRefObject<HTMLInputElement>;
-  const timezones = useRef() as React.MutableRefObject<HTMLInputElement>;
-  const description = useRef() as React.MutableRefObject<HTMLTextAreaElement>;
+  const location = useLocation();
+  const listing = location.state as ListingType;
+  const [selectedType, setSelectedType] = useState<string>(listing.jobType);
+  const [title, setTitle] = useState<string>(listing.jobTitle);
+  const [companyName, setCompanyName] = useState<string>(listing.companyName);
+  const [websiteLink, setWebsiteLink] = useState<string>(
+    listing.companyWebsite
+  );
+  const [applicationLink, setApplicationLink] = useState<string>(
+    listing.jobApplicationLink
+  );
+  const [category, setCategory] = useState<string>(listing.jobCategory);
+  const [region, setRegion] = useState<string>(listing.jobRegion);
+  const [timezones, setTimezones] = useState<string[]>(listing.jobTimezones);
+  const [description, setDescription] = useState<string>(
+    listing.jobDescription
+  );
 
   const submitHandler: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
-    const listing = {
-      ownerId: user?._id,
-      jobTitle: title.current.value,
+    const l: ListingType = {
+      _id: listing._id,
+      ownerId: listing.ownerId,
+      jobDate: listing.jobDate,
+      jobTitle: title,
       jobType: selectedType,
-      jobRegion: region.current.value,
-      jobTimezones: timezones.current.value.replaceAll(' ', '').split(','),
-      jobCategory: category.current.value,
-      companyName: companyName.current.value,
-      companyWebsite: websiteLink.current.value,
-      jobApplicationLink: applicationLink.current.value,
-      jobDescription: description.current.value.replaceAll('\n', '<br/>'),
+      jobRegion: region,
+      jobTimezones: timezones,
+      jobCategory: category,
+      companyName: companyName,
+      companyWebsite: websiteLink,
+      jobApplicationLink: applicationLink,
+      jobDescription: description,
     };
+    updateListing(l);
 
     const token = localStorage.getItem('LIST_JWT');
     const config = {
       headers: { 'x-auth-token': token as string },
     };
-    const data: ListingType = (await api.post(`/listings`, listing, config))
-      .data;
+    await api.put(`/listings/${l._id}`, l, config);
 
-    title.current.value =
-      companyName.current.value =
-      websiteLink.current.value =
-      applicationLink.current.value =
-      category.current.value =
-      region.current.value =
-      timezones.current.value =
-      description.current.value =
-        '';
-    setSelectedType(JobTypes[0]);
+    setTitle('');
+    setCompanyName('');
+    setWebsiteLink('');
+    setApplicationLink('');
+    setCategory('');
+    setRegion('');
+    setDescription('');
+    setTimezones([]);
+    setSelectedType('');
 
-    addListing(data);
     navigate(`/user/account/${user?.name}`, { replace: true });
   };
 
@@ -70,8 +78,10 @@ function AddForm(): JSX.Element {
               min={0}
               max={30}
               required
-              placeholder="i.e Senior Front-end Developer"
-              ref={title}
+              value={title}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setTitle(e.target.value)
+              }
             />
           </div>
 
@@ -83,8 +93,10 @@ function AddForm(): JSX.Element {
               min={0}
               max={30}
               required
-              placeholder="i.e Google"
-              ref={companyName}
+              value={companyName}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setCompanyName(e.target.value)
+              }
             />
           </div>
         </div>
@@ -98,8 +110,10 @@ function AddForm(): JSX.Element {
               min={0}
               max={30}
               required
-              placeholder="i.e https://google.com/"
-              ref={websiteLink}
+              value={websiteLink}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setWebsiteLink(e.target.value)
+              }
             />
           </div>
 
@@ -111,8 +125,10 @@ function AddForm(): JSX.Element {
               min={0}
               max={30}
               required
-              placeholder="i.e https://google.com/"
-              ref={applicationLink}
+              value={applicationLink}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setApplicationLink(e.target.value)
+              }
             />
           </div>
         </div>
@@ -143,8 +159,10 @@ function AddForm(): JSX.Element {
               min={0}
               max={30}
               required
-              placeholder="i.e Web Development"
-              ref={category}
+              value={category}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setCategory(e.target.value)
+              }
             />
           </div>
 
@@ -156,8 +174,10 @@ function AddForm(): JSX.Element {
               min={0}
               max={30}
               required
-              placeholder="i.e USA"
-              ref={region}
+              value={region}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setRegion(e.target.value)
+              }
             />
           </div>
 
@@ -169,8 +189,10 @@ function AddForm(): JSX.Element {
               min={0}
               max={30}
               required
-              placeholder="i.e UTC, ETC, ..."
-              ref={timezones}
+              value={timezones.toString().replaceAll(',', ', ')}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setTimezones(e.target.value.replaceAll(' ', '').split(','))
+              }
             />
           </div>
         </div>
@@ -179,15 +201,11 @@ function AddForm(): JSX.Element {
           <label className="AddForm__label">Job Description</label>
           <textarea
             className="AddForm__textarea"
-            placeholder="
-          - Talk about the Role
-          - Talk about the Role Responsibilities
-          - Talk about the Role Requirements
-          - Talk about the Role Benefits
-          - Talk about other stuff..
-          "
             minLength={300}
-            ref={description}
+            value={description.replaceAll('<br/>', '\n')}
+            onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+              setDescription(e.target.value.replaceAll('\n', '<br/>'))
+            }
           ></textarea>
         </div>
 
@@ -206,4 +224,4 @@ function AddForm(): JSX.Element {
   );
 }
 
-export default AddForm;
+export default UpdateForm;

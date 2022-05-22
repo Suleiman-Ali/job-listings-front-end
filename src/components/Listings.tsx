@@ -3,13 +3,18 @@ import Listing from './Listing';
 
 interface ListingsProps {
   listings: ListingType[];
+  currentPageUser?: boolean;
 }
 
-function Listings({ listings }: ListingsProps): JSX.Element {
+function Listings({ listings, currentPageUser }: ListingsProps): JSX.Element {
   return (
     <div className="listings">
-      {listings.map((listing) => (
-        <Listing listing={listing} key={listing._id} />
+      {listings.map((listing, index) => (
+        <Listing
+          listing={listing}
+          key={listing._id}
+          currentPageUser={currentPageUser}
+        />
       ))}
     </div>
   );

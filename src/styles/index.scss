@@ -91,25 +91,74 @@ body {
   }
 }
 
+$grey: #555a61;
+$grey-2: #323848;
+$grey-3: #262932;
+$gr: #20ab8a;
+$bl: #0f76ca;
+$rd: #e26970;
+$ya: #fcbc04;
+$pur: #6b51f3;
+$pi: #fa5788;
+$pi-2: #f84a7e;
+$pi-3: #e92a64;
+
 .listings {
   flex: 1;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  justify-items: center;
+  align-content: start;
+  gap: 1.25rem;
 }
 
 .listing {
-  max-width: 800px;
+  height: max-content;
+  max-width: 1100px;
   width: 100%;
-  background-color: $yellow--light;
-  padding: 1rem;
   display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  border-radius: 3px;
-  box-shadow: 0 0 1px 1px rgba(0, 0, 0, 1);
+  gap: 0.5rem;
+
+  &__btns {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__btn {
+    font-size: 1.5rem;
+    padding: 0.75rem;
+    border-radius: 3px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+
+    @media screen and (min-width: $bp-1) {
+      font-size: 1.75rem;
+    }
+
+    &:nth-child(1) {
+      background-color: $pi-3;
+    }
+
+    &:nth-child(2) {
+      background-color: $grey;
+    }
+  }
+
+  &__box {
+    flex: 1;
+    background-color: $yellow--light;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    border-radius: 3px;
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 1);
+  }
 
   &__companyName {
     font-size: 1.4rem;
@@ -141,15 +190,20 @@ body {
       font-size: 2rem;
     }
   }
-
-  &__innerBox {
-    width: 100%;
+  &__innerBoxOne {
     display: flex;
+    justify-content: space-between;
     align-items: center;
+  }
+
+  &__innerBoxTwo {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 0.5rem;
 
-    &:nth-child(1) {
-      justify-content: space-between;
+    @media screen and (min-width: $bp-3) {
+      grid-template-columns: repeat(4, max-content);
     }
   }
 
@@ -159,6 +213,7 @@ body {
     background-color: $yellow--dark;
     padding: 0.25rem;
     border-radius: 1px;
+    text-align: center;
 
     @media screen and (min-width: $bp-1) {
       font-size: 1.7rem;
@@ -171,7 +226,7 @@ body {
   border-radius: 3px;
   padding: 1.5rem;
   width: 100%;
-  max-width: 800px;
+  max-width: 1100px;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -336,7 +391,7 @@ body {
   &__main {
     width: 100%;
     align-self: center;
-    max-width: 800px;
+    max-width: 1100px;
     padding: 5rem 0.5rem;
     flex: 1;
     display: flex;
@@ -385,7 +440,7 @@ body {
   &__listingsBox {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.5rem;
   }
 
   &__addBox {
