@@ -1,11 +1,12 @@
+import SignInput from '../SignInput';
+import Context from '../../context';
 import Footer from '../Footer';
 import Navbar from '../Navbar';
-import { Link, useNavigate } from 'react-router-dom';
-import { FormEventHandler, useContext, useRef, useState } from 'react';
 import api from '../../api';
 import jwtDecode from 'jwt-decode';
+import { Link, useNavigate } from 'react-router-dom';
+import { FormEventHandler, useContext, useRef, useState } from 'react';
 import { UserType } from '../../data';
-import Context from '../../context';
 
 function SignUp(): JSX.Element {
   const { userSetter } = useContext(Context);
@@ -44,35 +45,17 @@ function SignUp(): JSX.Element {
       <main className="signIn__main">
         <h1 className="signIn__title">Sign Up</h1>
         <form className="signIn__form" onSubmit={submitHandler}>
-          <input
-            type="text"
-            className="signIn__input"
-            placeholder="Name.."
-            ref={name}
-          />
-          <input
-            type="email"
-            className="signIn__input"
-            placeholder="Email.."
-            ref={email}
-          />
-          <input
-            type="password"
-            className="signIn__input"
-            placeholder="Password.."
-            ref={password}
-          />
+          <SignInput type="text" plcHold="Name.." ref={name} />
+          <SignInput type="email" plcHold="Email.." ref={email} />
+          <SignInput type="password" plcHold="Password.." ref={password} />
+
           <div className="signIn__btns">
             {!operating && (
               <Link to="/sign-in" className="signIn__btn">
                 Sign In?
               </Link>
             )}
-            <button
-              className="signIn__btn"
-              disabled={operating}
-              type={'submit'}
-            >
+            <button className="signIn__btn" disabled={operating} type="submit">
               Sign Up
             </button>
           </div>

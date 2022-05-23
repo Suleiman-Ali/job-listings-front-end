@@ -1,12 +1,16 @@
-import { FormEventHandler, useContext, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import api from '../../api';
 import Context from '../../context';
-import { JobTypes, ListingType } from '../../data';
-import Footer from '../Footer';
 import Navbar from '../Navbar';
+import FormInputRefed from '../FormInputRefed';
+import FormLabel from '../FormLabel';
+import FormOption from '../FormOption';
+import Footer from '../Footer';
+import api from '../../api';
+import { FormEventHandler, useContext, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { JobTypes, ListingType } from '../../data';
+import FormButtons from '../FormButtons';
 
-function AddForm(): JSX.Element {
+function AddForm(): JSX.Element | null {
   const { user, addListing } = useContext(Context);
   const navigate = useNavigate();
   const [selectedType, setSelectedType] = useState<string>(JobTypes[0]);
@@ -18,6 +22,11 @@ function AddForm(): JSX.Element {
   const region = useRef() as React.MutableRefObject<HTMLInputElement>;
   const timezones = useRef() as React.MutableRefObject<HTMLInputElement>;
   const description = useRef() as React.MutableRefObject<HTMLTextAreaElement>;
+
+  if (!user) {
+    navigate('/sign-in');
+    return null;
+  }
 
   const submitHandler: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
@@ -63,27 +72,21 @@ function AddForm(): JSX.Element {
       <form className="AddForm__form" onSubmit={submitHandler}>
         <div className="AddForm__sideBySideBox">
           <div className="AddForm__inputBox">
-            <label className="AddForm__label">Job Title</label>
-            <input
-              className="AddForm__input"
-              type="text"
+            <FormLabel text="Job Title" />
+            <FormInputRefed
               min={0}
               max={30}
-              required
-              placeholder="i.e Senior Front-end Developer"
+              plcHold="i.e Senior Front-end Developer"
               ref={title}
             />
           </div>
 
           <div className="AddForm__inputBox">
-            <label className="AddForm__label">Company Name</label>
-            <input
-              className="AddForm__input"
-              type="text"
+            <FormLabel text="Company Name" />
+            <FormInputRefed
               min={0}
               max={30}
-              required
-              placeholder="i.e Google"
+              plcHold="i.e Google"
               ref={companyName}
             />
           </div>
@@ -91,92 +94,69 @@ function AddForm(): JSX.Element {
 
         <div className="AddForm__sideBySideBox">
           <div className="AddForm__inputBox">
-            <label className="AddForm__label">Company Website Link</label>
-            <input
-              className="AddForm__input"
-              type="text"
+            <FormLabel text="Company Website Link" />
+            <FormInputRefed
               min={0}
               max={30}
-              required
-              placeholder="i.e https://google.com/"
+              plcHold="i.e google.com"
               ref={websiteLink}
             />
           </div>
 
           <div className="AddForm__inputBox">
-            <label className="AddForm__label">Job Application Link</label>
-            <input
-              className="AddForm__input"
-              type="text"
+            <FormLabel text="Job Application Link" />
+            <FormInputRefed
               min={0}
               max={30}
-              required
-              placeholder="i.e https://google.com/"
+              plcHold="i.e google.com"
               ref={applicationLink}
             />
           </div>
         </div>
 
         <div className="AddForm__inputBox">
-          <label className="AddForm__label">Job Type</label>
+          <FormLabel text="Job Type" />
           <div className="AddForm__optionsBox">
             {JobTypes.map((jobType) => (
-              <p
-                className={`AddForm__option ${
-                  jobType === selectedType && 'selectedOption'
-                }`}
-                key={jobType}
+              <FormOption
+                condition={jobType === selectedType}
+                text={jobType}
                 onClick={() => setSelectedType(jobType)}
-              >
-                {jobType}
-              </p>
+                key={jobType}
+              />
             ))}
           </div>
         </div>
 
         <div className="AddForm__3SideBySideBox">
           <div className="AddForm__inputBox">
-            <label className="AddForm__label">Job Category</label>
-            <input
-              className="AddForm__input"
-              type="text"
+            <FormLabel text="Job Category" />
+            <FormInputRefed
               min={0}
               max={30}
-              required
-              placeholder="i.e Web Development"
+              plcHold="i.e Web Development"
               ref={category}
             />
           </div>
 
           <div className="AddForm__inputBox">
-            <label className="AddForm__label">Job Region</label>
-            <input
-              className="AddForm__input"
-              type="text"
-              min={0}
-              max={30}
-              required
-              placeholder="i.e USA"
-              ref={region}
-            />
+            <FormLabel text="Job Region" />
+            <FormInputRefed min={0} max={30} plcHold="i.e USA" ref={region} />
           </div>
 
           <div className="AddForm__inputBox">
-            <label className="AddForm__label">Job Timezone</label>
-            <input
-              className="AddForm__input"
-              type="text"
+            <FormLabel text="Job Timezone" />
+            <FormInputRefed
               min={0}
               max={30}
-              required
-              placeholder="i.e UTC, ETC, ..."
+              plcHold="i.e UTC, ETC, ..."
               ref={timezones}
             />
           </div>
         </div>
 
         <div className="AddForm__inputBox">
-          <label className="AddForm__label">Job Description</label>
+          <FormLabel text="Job Description" />
           <textarea
             className="AddForm__textarea"
             placeholder="
@@ -186,19 +166,12 @@ function AddForm(): JSX.Element {
           - Talk about the Role Benefits
           - Talk about other stuff..
           "
-            minLength={300}
+            minLength={250}
             ref={description}
-          ></textarea>
+          />
         </div>
 
-        <div className="AddForm__btns">
-          <button className="AddForm__btn" type="submit">
-            Save
-          </button>
-          <Link to="/" className="AddForm__btn">
-            Cancel
-          </Link>
-        </div>
+        <FormButtons />
       </form>
 
       <Footer />

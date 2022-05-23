@@ -1,8 +1,10 @@
-import { useLocation } from 'react-router-dom';
-import { ListingType } from '../../data';
+import ListingPageInfo from '../ListingPageInfo';
+import ListingPageLink from '../ListingPageLink';
 import Footer from '../Footer';
 import Navbar from '../Navbar';
 import parse from 'html-react-parser';
+import { useLocation } from 'react-router-dom';
+import { ListingType } from '../../data';
 
 const prefixLink = (str: string): string => 'https://' + str;
 
@@ -17,49 +19,38 @@ function ListingPage(): JSX.Element {
   return (
     <div className="listingPage">
       <Navbar />
-      <div className="titleBox">
-        <p className="titleBox__date">{date}</p>
-        <p className="titleBox__title">{listing.jobTitle}</p>
+      <div className="listingPageBox">
+        <p className="listingPageBox__date">{date}</p>
+        <p className="listingPageBox__title">{listing.jobTitle}</p>
 
-        <div className="titleBox__grid">
-          <p className="titleBox__info">{listing.jobCategory}</p>
-          <p className="titleBox__info">{listing.jobType}</p>
-          <p className="titleBox__info">{listing.jobRegion}</p>
+        <div className="listingPageBox__grid">
+          <ListingPageInfo text={listing.jobCategory} />
+          <ListingPageInfo text={listing.jobType} />
+          <ListingPageInfo text={listing.jobRegion} />
           {listing.jobTimezones.map((zone) => (
-            <p className="titleBox__info" key={zone}>
-              {zone}
-            </p>
+            <ListingPageInfo text={zone} key={zone} />
           ))}
         </div>
 
-        <div className="titleBox__flex">
-          <a
+        <div className="listingPageBox__flex">
+          <ListingPageLink
             href={prefixLink(listing.companyWebsite)}
-            className="titleBox__link"
-            target="_blank"
-            rel="noreferrer"
-          >
-            {listing.companyName} website
-          </a>
-          <a
+            text={`${listing.companyName} website`}
+          />
+          <ListingPageLink
             href={prefixLink(listing.jobApplicationLink)}
-            className="titleBox__link"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Apply for the job
-          </a>
+            text="Apply for the job"
+          />
         </div>
 
-        <p className="titleBox__description">{parse(listing.jobDescription)}</p>
-        <a
+        <p className="listingPageBox__description">
+          {parse(listing.jobDescription)}
+        </p>
+
+        <ListingPageLink
           href={prefixLink(listing.jobApplicationLink)}
-          target="_blank"
-          rel="noreferrer"
-          className="titleBox__link"
-        >
-          Apply for the job
-        </a>
+          text="Apply for the job"
+        />
       </div>
       <Footer />
     </div>

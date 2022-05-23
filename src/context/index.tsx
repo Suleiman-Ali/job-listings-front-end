@@ -42,15 +42,12 @@ export function ContextProvider({
     setUserListings((lists) => lists.filter((l) => l._id !== listing._id));
   };
 
+  // prettier-ignore
   const updateListing = (listing: ListingType) => {
     const currentListing = listings.find((l) => l._id === listing._id);
     const newListing = { ...currentListing, ...listing };
-    setListings((lists) =>
-      lists.map((l) => (l._id === listing._id ? newListing : l))
-    );
-    setUserListings((lists) =>
-      lists.map((l) => (l._id === listing._id ? newListing : l))
-    );
+    setListings((lists) => lists.map((l) => (l._id === listing._id ? newListing : l)));
+    setUserListings((lists) => lists.map((l) => (l._id === listing._id ? newListing : l)));
   };
 
   useEffect(() => {

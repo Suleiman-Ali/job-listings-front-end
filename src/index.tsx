@@ -1,15 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import Home from './components/pages/Home';
-import ListingPage from './components/pages/ListingPage';
-import { ContextProvider } from './context';
-import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
+import App from './App';
+
 import './styles/index.scss';
-import SingIn from './components/pages/SingIn';
-import SignUp from './components/pages/SingUp';
-import UserPage from './components/pages/UserPage';
-import AddForm from './components/pages/AddForm';
-import UpdateForm from './components/pages/UpdateForm';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -17,18 +10,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <ContextProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/listings/:id" element={<ListingPage />} />
-          <Route path="/sign-in" element={<SingIn />} />
-          <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/user/account/:name" element={<UserPage />} />
-          <Route path="/add-form" element={<AddForm />} />
-          <Route path="/update-form" element={<UpdateForm />} />
-        </Routes>
-      </Router>
-    </ContextProvider>
+    <App />
   </React.StrictMode>
 );

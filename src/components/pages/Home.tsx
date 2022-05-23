@@ -18,6 +18,8 @@ function Home(): JSX.Element {
 
 export default Home;
 
-// TODO: Protect Routes
+// TODO: Error Handling
+// TODO: ...
 // TODO: Refactor
-// TODO: Other Stuff..
+// TODO: Not found page
+// TODO: Protect Routes

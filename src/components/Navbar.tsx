@@ -1,6 +1,6 @@
+import Context from '../context';
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import Context from '../context';
 
 function Navbar(): JSX.Element {
   const { user } = useContext(Context);

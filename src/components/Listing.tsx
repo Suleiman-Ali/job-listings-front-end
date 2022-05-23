@@ -1,7 +1,8 @@
+import ListingInfo from './ListingInfo';
+import Context from '../context';
+import api from '../api';
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import api from '../api';
-import Context from '../context';
 import { ListingType } from '../data';
 
 interface ListingProps {
@@ -48,10 +49,10 @@ function Listing({ listing, currentPageUser }: ListingProps): JSX.Element {
         <p className="listing__title">{jobTitle}</p>
 
         <div className="listing__innerBoxTwo">
-          <p className="listing__info">{jobType}</p>
-          <p className="listing__info">{jobRegion}</p>
-          <p className="listing__info">{jobTimezones[0]}</p>
-          <p className="listing__info">{jobCategory}</p>
+          <ListingInfo text={jobType} />
+          <ListingInfo text={jobRegion} />
+          <ListingInfo text={jobTimezones[0]} />
+          <ListingInfo text={jobCategory} />
         </div>
       </Link>
 

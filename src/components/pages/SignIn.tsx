@@ -1,11 +1,12 @@
+import SignInput from '../SignInput';
+import Context from '../../context';
+import Navbar from '../Navbar';
+import Footer from '../Footer';
+import api from '../../api';
 import jwtDecode from 'jwt-decode';
 import { FormEventHandler, useContext, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import api from '../../api';
-import Context from '../../context';
 import { UserType } from '../../data';
-import Footer from '../Footer';
-import Navbar from '../Navbar';
 
 function SingIn(): JSX.Element {
   const { userSetter } = useContext(Context);
@@ -39,18 +40,9 @@ function SingIn(): JSX.Element {
       <main className="signIn__main">
         <h1 className="signIn__title">Sign In</h1>
         <form className="signIn__form" onSubmit={submitHandler}>
-          <input
-            type="email"
-            className="signIn__input"
-            placeholder="Email.."
-            ref={email}
-          />
-          <input
-            type="password"
-            className="signIn__input"
-            placeholder="Password.."
-            ref={password}
-          />
+          <SignInput type="email" plcHold="Email.." ref={email} />
+          <SignInput type="password" plcHold="Password.." ref={password} />
+
           <div className="signIn__btns">
             {!operating && (
               <Link to="/sign-up" className="signIn__btn">
