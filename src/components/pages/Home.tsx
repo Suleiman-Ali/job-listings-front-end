@@ -1,8 +1,8 @@
-import { useContext } from 'react';
 import Context from '../../context';
 import Footer from '../Footer';
 import Listings from '../Listings';
 import Navbar from '../Navbar';
+import { useContext } from 'react';
 
 function Home(): JSX.Element {
   const { listings } = useContext(Context);
@@ -18,8 +18,10 @@ function Home(): JSX.Element {
 
 export default Home;
 
-// TODO: Error Handling
-// TODO: ...
+// TODO: Search
+// TODO: Better Design
+// TODO: Pagination?
 // TODO: Refactor
 // TODO: Not found page
 // TODO: Protect Routes
+// TODO: Make sure the app is secure

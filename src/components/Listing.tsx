@@ -2,16 +2,16 @@ import ListingInfo from './ListingInfo';
 import Context from '../context';
 import api from '../api';
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ListingType } from '../data';
 
 interface ListingProps {
   listing: ListingType;
-  currentPageUser?: boolean;
 }
 
-function Listing({ listing, currentPageUser }: ListingProps): JSX.Element {
-  const { deleteListing } = useContext(Context);
+function Listing({ listing }: ListingProps): JSX.Element {
+  const location = useLocation();
+  const { deleteListing, user } = useContext(Context);
   const {
     companyName,
     jobTitle,
@@ -24,6 +24,9 @@ function Listing({ listing, currentPageUser }: ListingProps): JSX.Element {
 
   let date: string | string[] = new Date(jobDate).toDateString().split(' ');
   date = `${date[1]} ${date[2]}`;
+
+  const userOwnsListing = user?._id === listing.ownerId;
+  const userOnUserPage = location.pathname === `/user/account/${user?.name}`;
 
   const deleteHandler = async () => {
     deleteListing(listing);
@@ -56,7 +59,7 @@ function Listing({ listing, currentPageUser }: ListingProps): JSX.Element {
         </div>
       </Link>
 
-      {currentPageUser && (
+      {userOwnsListing && userOnUserPage && (
         <div className="listing__btns">
           <i
             className="bi bi-x-lg listing__btn"

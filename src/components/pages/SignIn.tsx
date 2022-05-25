@@ -7,10 +7,12 @@ import jwtDecode from 'jwt-decode';
 import { FormEventHandler, useContext, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserType } from '../../data';
+import Error from '../Error';
 
 function SingIn(): JSX.Element {
   const { userSetter } = useContext(Context);
   const [operating, setOperating] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
   const navigate = useNavigate();
   const email = useRef() as React.MutableRefObject<HTMLInputElement>;
   const password = useRef() as React.MutableRefObject<HTMLInputElement>;
@@ -25,13 +27,17 @@ function SingIn(): JSX.Element {
     };
     email.current.value = password.current.value = '';
 
-    const jwt = (await api.post('/auth', userLog)).data;
-    const user: UserType = jwtDecode(jwt);
-
-    localStorage.setItem('LIST_JWT', jwt);
-    userSetter(user);
-    setOperating(false);
-    navigate('/');
+    try {
+      const jwt = (await api.post('/auth', userLog)).data;
+      const user: UserType = jwtDecode(jwt);
+      localStorage.setItem('LIST_JWT', jwt);
+      userSetter(user);
+      setOperating(false);
+      navigate('/');
+    } catch (_) {
+      setOperating(false);
+      setIsError(true);
+    }
   };
 
   return (
@@ -40,6 +46,12 @@ function SingIn(): JSX.Element {
       <main className="signIn__main">
         <h1 className="signIn__title">Sign In</h1>
         <form className="signIn__form" onSubmit={submitHandler}>
+          {isError && (
+            <Error
+              msg="Invalid email or password."
+              onClick={() => setIsError(false)}
+            />
+          )}
           <SignInput type="email" plcHold="Email.." ref={email} />
           <SignInput type="password" plcHold="Password.." ref={password} />
 

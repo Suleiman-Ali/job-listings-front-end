@@ -7,10 +7,12 @@ import jwtDecode from 'jwt-decode';
 import { Link, useNavigate } from 'react-router-dom';
 import { FormEventHandler, useContext, useRef, useState } from 'react';
 import { UserType } from '../../data';
+import Error from '../Error';
 
 function SignUp(): JSX.Element {
   const { userSetter } = useContext(Context);
   const [operating, setOperating] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
   const navigate = useNavigate();
   const name = useRef() as React.MutableRefObject<HTMLInputElement>;
   const email = useRef() as React.MutableRefObject<HTMLInputElement>;
@@ -30,13 +32,18 @@ function SignUp(): JSX.Element {
     };
     name.current.value = email.current.value = password.current.value = '';
 
-    await api.post('/users', userReg);
-    const jwt = (await api.post('/auth', userLog)).data;
-    const user: UserType = jwtDecode(jwt);
-    localStorage.setItem('LIST_JWT', jwt);
-    userSetter(user);
-    setOperating(false);
-    navigate('/');
+    try {
+      await api.post('/users', userReg);
+      const jwt = (await api.post('/auth', userLog)).data;
+      const user: UserType = jwtDecode(jwt);
+      localStorage.setItem('LIST_JWT', jwt);
+      userSetter(user);
+      setOperating(false);
+      navigate('/');
+    } catch (_) {
+      setOperating(false);
+      setIsError(true);
+    }
   };
 
   return (
@@ -45,6 +52,12 @@ function SignUp(): JSX.Element {
       <main className="signIn__main">
         <h1 className="signIn__title">Sign Up</h1>
         <form className="signIn__form" onSubmit={submitHandler}>
+          {isError && (
+            <Error
+              msg="Invalid name, email, or password."
+              onClick={() => setIsError(false)}
+            />
+          )}
           <SignInput type="text" plcHold="Name.." ref={name} />
           <SignInput type="email" plcHold="Email.." ref={email} />
           <SignInput type="password" plcHold="Password.." ref={password} />

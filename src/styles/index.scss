@@ -599,6 +599,32 @@ $pi-3: #e92a64;
   }
 }
 
+.error {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $rd;
+  padding: 2.5rem;
+  border-radius: 1px;
+
+  &__msg {
+    font-size: 1.75rem;
+
+    @media screen and (min-width: $bp-1) {
+      font-size: 2rem;
+    }
+  }
+
+  &__btn {
+    font-size: 1.75rem;
+    cursor: pointer;
+
+    @media screen and (min-width: $bp-1) {
+      font-size: 2rem;
+    }
+  }
+}
+
 .footer {
   display: flex;
   justify-content: center;
