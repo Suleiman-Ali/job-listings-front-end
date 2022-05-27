@@ -33,10 +33,22 @@ button {
   background-color: transparent;
 }
 
-body {
+.home {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+
+  &__main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+
+    padding: 1rem;
+  }
 }
 
-.home,
 .listingPage {
   display: flex;
   flex-direction: column;
@@ -87,6 +99,124 @@ body {
 
     @media screen and (min-width: $bp-1) {
       font-size: 1.4rem;
+    }
+  }
+}
+
+.search {
+  max-width: 1100px;
+  width: 100%;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2.5rem;
+
+  &__title {
+    font-size: 4rem;
+    font-weight: 600;
+    color: #000;
+
+    @media screen and (min-width: $bp-1) {
+      font-size: 5rem;
+    }
+  }
+
+  &__formBox {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  &__innerBox {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__options {
+    align-self: flex-end;
+    padding: 1rem;
+    background-color: $yellow--light;
+    border: 1px solid $yellow--dark;
+    outline: none;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+    font-size: 1.75rem;
+
+    @media screen and (min-width: $bp-1) {
+      font-size: 2rem;
+    }
+  }
+
+  &__keywordBox {
+    align-self: flex-end;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: $yellow--light;
+    border: 1px solid $yellow--dark;
+    border-radius: 3px;
+  }
+
+  &__keyword {
+    color: #000;
+    padding-right: 5rem;
+    font-size: 1.75rem;
+
+    @media screen and (min-width: $bp-1) {
+      font-size: 2rem;
+    }
+  }
+
+  &__icon {
+    color: #000;
+    font-size: 1.75rem;
+    cursor: pointer;
+
+    @media screen and (min-width: $bp-1) {
+      font-size: 2rem;
+    }
+  }
+
+  &__form {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 3px solid $yellow--dark;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  &__input {
+    background-color: $yellow--light;
+    flex: 1;
+    padding: 2.5rem 1rem;
+    font-size: 1.75rem;
+    border: none;
+    outline: none;
+
+    @media screen and (min-width: $bp-1) {
+      font-size: 2rem;
+    }
+  }
+
+  &__btn {
+    font-size: 1.75rem;
+    padding: 2.5rem;
+    background-color: #000;
+    color: #fff;
+    cursor: pointer;
+
+    @media screen and (min-width: $bp-1) {
+      font-size: 2rem;
     }
   }
 }

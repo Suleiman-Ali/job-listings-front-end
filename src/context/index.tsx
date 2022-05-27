@@ -8,10 +8,14 @@ interface ContextValues {
   listings: ListingType[];
   userListings: ListingType[];
   user: UserType | undefined;
+  keyword: string;
+  selectedJobType: string;
   userSetter: (user: UserType | undefined) => void;
   addListing: (newListing: ListingType) => void;
   deleteListing: (listing: ListingType) => void;
   updateListing: (listing: ListingType) => void;
+  keywordSetter: (keyword: string) => void;
+  selectedJobTypeSetter: (type: string) => void;
 }
 
 interface ContextProviderProps {
@@ -29,6 +33,11 @@ export function ContextProvider({
     ? jwtDecode<UserType>(localStorage.getItem('LIST_JWT') as string)
     : undefined;
   const [user, setUser] = useState<UserType | undefined>(userInput);
+  const [keyword, setKeyword] = useState<string>('');
+  const [selectedJobType, setSelectedJobType] = useState<string>('All-Jobs');
+
+  const keywordSetter = (keyword: string) => setKeyword(keyword);
+  const selectedJobTypeSetter = (type: string) => setSelectedJobType(type);
 
   const userSetter = (user: UserType | undefined) => setUser(user);
 
@@ -79,6 +88,10 @@ export function ContextProvider({
         userListings,
         deleteListing,
         updateListing,
+        keyword,
+        keywordSetter,
+        selectedJobType,
+        selectedJobTypeSetter,
       }}
     >
       {children}

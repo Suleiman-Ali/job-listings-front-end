@@ -27,3 +27,18 @@ export const JobTypes = [
   'Internship',
   'Temporary',
 ];
+
+export const filterKeywordOnly = (listings: ListingType[], keyword: string) => {
+  if (!keyword) return listings;
+  return listings.filter((listing) =>
+    listing.jobTitle.toLowerCase().includes(keyword.toLowerCase())
+  );
+};
+
+export const filterSelectedTypeOnly = (
+  listings: ListingType[],
+  selected: string
+) => {
+  if (selected === 'All-Jobs') return listings;
+  return listings.filter((listing) => listing.jobType === selected);
+};

@@ -3,14 +3,22 @@ import Footer from '../Footer';
 import Listings from '../Listings';
 import Navbar from '../Navbar';
 import { useContext } from 'react';
+import Search from '../Search';
+import { filterKeywordOnly, filterSelectedTypeOnly } from '../../data';
 
 function Home(): JSX.Element {
-  const { listings } = useContext(Context);
+  const { keyword, listings, selectedJobType } = useContext(Context);
+
+  // prettier-ignore
+  let listingsView = filterSelectedTypeOnly(filterKeywordOnly(listings, keyword), selectedJobType);
 
   return (
     <div className="home">
       <Navbar />
-      <Listings listings={listings} />
+      <main className="home__main">
+        <Search />
+        <Listings listings={listingsView} />
+      </main>
       <Footer />
     </div>
   );
@@ -18,7 +26,6 @@ function Home(): JSX.Element {
 
 export default Home;
 
-// TODO: Search
 // TODO: Better Design
 // TODO: Pagination?
 // TODO: Refactor
