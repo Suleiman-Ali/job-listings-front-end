@@ -10,6 +10,8 @@ interface ContextValues {
   user: UserType | undefined;
   keyword: string;
   selectedJobType: string;
+  loadingHome: boolean;
+  loadingUserPage: boolean;
   userSetter: (user: UserType | undefined) => void;
   addListing: (newListing: ListingType) => void;
   deleteListing: (listing: ListingType) => void;
@@ -35,6 +37,8 @@ export function ContextProvider({
   const [user, setUser] = useState<UserType | undefined>(userInput);
   const [keyword, setKeyword] = useState<string>('');
   const [selectedJobType, setSelectedJobType] = useState<string>('All-Jobs');
+  const [loadingHome, setLoadingHome] = useState<boolean>(true);
+  const [loadingUserPage, setLoadingUserPage] = useState<boolean>(true);
 
   const keywordSetter = (keyword: string) => setKeyword(keyword);
   const selectedJobTypeSetter = (type: string) => setSelectedJobType(type);
@@ -63,6 +67,7 @@ export function ContextProvider({
     (async () => {
       const { data } = await api.get('/listings');
       setListings(data);
+      setLoadingHome(false);
     })();
   }, []);
 
@@ -75,6 +80,7 @@ export function ContextProvider({
       };
       const data = (await api.get(`/listings/${user._id}`, config)).data;
       setUserListings(data);
+      setLoadingUserPage(false);
     })();
   }, [user]);
 
@@ -92,6 +98,8 @@ export function ContextProvider({
         keywordSetter,
         selectedJobType,
         selectedJobTypeSetter,
+        loadingHome,
+        loadingUserPage,
       }}
     >
       {children}
