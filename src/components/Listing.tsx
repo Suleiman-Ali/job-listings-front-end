@@ -26,7 +26,7 @@ function Listing({ listing }: ListingProps): JSX.Element {
   date = `${date[1]} ${date[2]}`;
 
   const userOwnsListing = user?._id === listing.ownerId;
-  const userOnUserPage = location.pathname === `/user/account/${user?.name}`;
+  const userOwnUserPage = location.pathname === `/user/account/${user?.name}`;
 
   const deleteHandler = async () => {
     deleteListing(listing);
@@ -59,7 +59,7 @@ function Listing({ listing }: ListingProps): JSX.Element {
         </div>
       </Link>
 
-      {userOwnsListing && userOnUserPage && (
+      {userOwnsListing && userOwnUserPage && (
         <div className="listing__btns">
           <i
             className="bi bi-x-lg listing__btn"

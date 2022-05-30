@@ -2,9 +2,11 @@ import Context from '../../context';
 import Footer from '../Footer';
 import Listings from '../Listings';
 import Navbar from '../Navbar';
-import ReactLoading from 'react-loading';
+import Loading from '../Loading';
+import NotfoundMessage from '../NotfoundMessage';
 import { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { sortByDate } from '../../data';
 
 function UserPage(): JSX.Element | null {
   const { user, userSetter, userListings, loadingUserPage } =
@@ -50,15 +52,11 @@ function UserPage(): JSX.Element | null {
               <i className="bi bi-plus userPage__linkIcon" />
             </Link>
           </div>
-          {loadingUserPage && (
-            <ReactLoading
-              type="cylon"
-              color="#e5844a"
-              width="90px"
-              className="loading"
-            />
+          {loadingUserPage && <Loading />}
+          {!loadingUserPage && userListings.length > 0 && (
+            <Listings listings={sortByDate(userListings)} />
           )}
-          {!loadingUserPage && <Listings listings={userListings} />}
+          {!loadingUserPage && userListings.length <= 0 && <NotfoundMessage />}
         </div>
       </main>
 

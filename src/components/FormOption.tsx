@@ -11,7 +11,7 @@ function FormOption({
 }: FormOptionProps): JSX.Element {
   return (
     <p
-      className={`AddForm__option ${condition && 'selectedOption'}`}
+      className={`AUForm__option ${condition && 'selectedOption'}`}
       key={text}
       onClick={onClick}
     >

@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Spline+Sans+Mono:wght@400;600&display=swap');
 
-$yellow--light: #fff7cc;
-$yellow--dark: #ffd500;
-$black: #212529;
-
+$rd: #e26970;
+$primary: #e5844a;
+$secondary: #1b1a2c;
+$box-shadow: rgba($primary, 0.5) 0px 0px 0px 2px;
 $bp: 450px;
 $bp-1: 500px;
 $bp-2: 700px;
@@ -32,10 +32,6 @@ button {
   border: none;
   background-color: transparent;
 }
-
-$primary: #e5844a;
-$secondary: #1b1a2c;
-$box-shadow: rgba($primary, 0.5) 0px 0px 0px 2px;
 
 body::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
@@ -95,12 +91,12 @@ body::-webkit-scrollbar-thumb {
 
   &__title {
     color: $secondary;
-    font-size: 2rem;
+    font-size: 1.75rem;
     cursor: pointer;
     text-transform: uppercase;
 
     @media screen and (min-width: $bp-1) {
-      font-size: 2.5rem;
+      font-size: 2.25rem;
     }
   }
 
@@ -272,18 +268,6 @@ body::-webkit-scrollbar-thumb {
     }
   }
 }
-
-$grey: #555a61;
-$grey-2: #323848;
-$grey-3: #262932;
-$gr: #20ab8a;
-$bl: #0f76ca;
-$rd: #e26970;
-$ya: #fcbc04;
-$pur: #6b51f3;
-$pi: #fa5788;
-$pi-2: #f84a7e;
-$pi-3: #e92a64;
 
 .listings {
   flex: 1;
@@ -481,7 +465,7 @@ $pi-3: #e92a64;
   }
 }
 
-.signIn {
+.sign {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -657,7 +641,7 @@ $pi-3: #e92a64;
   }
 }
 
-.AddForm {
+.AUForm {
   display: flex;
   flex-direction: column;
   gap: 5rem;
@@ -823,6 +807,84 @@ $pi-3: #e92a64;
   }
 }
 
+.notfound {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+
+  &__main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    padding: 1rem;
+  }
+
+  &__title {
+    font-size: 2.6rem;
+    font-weight: 600;
+    color: $secondary;
+    position: relative;
+
+    @media screen and (min-width: $bp-1) {
+      font-size: 3.5rem;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 103%;
+      height: 125%;
+      z-index: -1;
+      background: rgb(229, 132, 74);
+      background: linear-gradient(
+        119deg,
+        rgba(229, 132, 74, 1) 44%,
+        rgba(211, 100, 35, 1) 100%
+      );
+      transform: translateX(-50%) translateY(-50%) skew(-25deg);
+      border-radius: 3px;
+
+      @media screen and (min-width: $bp-2) {
+        width: 125%;
+      }
+    }
+  }
+
+  &__btn {
+    border: none;
+    outline: none;
+    text-align: center;
+    background-color: $secondary;
+    color: $primary;
+    padding: 0.5rem 3rem;
+    font-size: 1.75rem;
+    border-radius: 1.5px;
+    box-shadow: $box-shadow;
+    cursor: pointer;
+
+    @media screen and (min-width: $bp) {
+      font-size: 2.5rem;
+    }
+  }
+}
+
+.notfoundMessage {
+  font-size: 1.5rem;
+  font-weight: 600;
+  align-self: center;
+  justify-self: center;
+
+  @media screen and (min-width: $bp-1) {
+    font-size: 2rem;
+  }
+}
+
 .footer {
   display: flex;
   justify-content: center;
@@ -831,7 +893,11 @@ $pi-3: #e92a64;
   border-top: 1px solid #ccc;
   padding: 3rem;
   color: $secondary;
-  font-size: 2rem;
+  font-size: 1.75rem;
   justify-self: flex-end;
   text-transform: uppercase;
+
+  @media screen and (min-width: $bp-1) {
+    font-size: 2rem;
+  }
 }

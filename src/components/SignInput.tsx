@@ -8,7 +8,7 @@ interface SignInputProps {
 const SignInput = forwardRef<HTMLInputElement, SignInputProps>((props, ref) => (
   <input
     type={props.type}
-    className="signIn__input"
+    className="sign__input"
     placeholder={props.plcHold}
     ref={ref}
   />

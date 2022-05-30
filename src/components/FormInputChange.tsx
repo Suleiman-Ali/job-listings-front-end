@@ -4,6 +4,7 @@ interface FormInputChangeProps {
   min: number;
   max: number;
   value: string;
+  type?: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -12,11 +13,12 @@ function FormInputChange({
   max,
   value,
   onChange,
+  type,
 }: FormInputChangeProps): JSX.Element {
   return (
     <input
-      className="AddForm__input"
-      type="text"
+      className="AUForm__input"
+      type={type || 'text'}
       min={min}
       max={max}
       value={value}

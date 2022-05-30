@@ -5,6 +5,7 @@ import SignUp from './components/pages/SignUp';
 import UserPage from './components/pages/UserPage';
 import AddForm from './components/pages/AddForm';
 import UpdateForm from './components/pages/UpdateForm';
+import Notfound from './components/pages/Notfound';
 import { ContextProvider } from './context';
 import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
 
@@ -20,6 +21,7 @@ function App(): JSX.Element {
           <Route path="/user/account/:name" element={<UserPage />} />
           <Route path="/add-form" element={<AddForm />} />
           <Route path="/update-form" element={<UpdateForm />} />
+          <Route path="*" element={<Notfound />} />
         </Routes>
       </Router>
     </ContextProvider>

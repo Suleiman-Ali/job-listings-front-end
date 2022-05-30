@@ -42,3 +42,8 @@ export const filterSelectedTypeOnly = (
   if (selected === 'All-Jobs') return listings;
   return listings.filter((listing) => listing.jobType === selected);
 };
+
+export const sortByDate = (listings: ListingType[]) =>
+  listings.sort(
+    (l1, l2) => new Date(l1.jobDate).getDay() - new Date(l2.jobDate).getDay()
+  );

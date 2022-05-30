@@ -4,6 +4,7 @@ import FormInputChange from '../FormInputChange';
 import FormLabel from '../FormLabel';
 import FormOption from '../FormOption';
 import Footer from '../Footer';
+import FormButtons from '../FormButtons';
 import api from '../../api';
 import {
   ChangeEvent,
@@ -14,7 +15,6 @@ import {
 } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { JobTypes, ListingType } from '../../data';
-import FormButtons from '../FormButtons';
 
 function UpdateForm(): JSX.Element | null {
   const { updateListing, user } = useContext(Context);
@@ -32,7 +32,7 @@ function UpdateForm(): JSX.Element | null {
   const [description, setDescription] = useState<string>('');
 
   useEffect(() => {
-    if (user) {
+    if (user && listing) {
       setSelectedType(listing.jobType);
       setTitle(listing.jobTitle);
       setCompanyName(listing.companyName);
@@ -46,7 +46,12 @@ function UpdateForm(): JSX.Element | null {
   }, []);
 
   if (!user) {
-    navigate('/sign-in');
+    navigate('/sign-in', { replace: true });
+    return null;
+  }
+
+  if (!listing) {
+    navigate('/not-found', { replace: true });
     return null;
   }
 
@@ -113,11 +118,11 @@ function UpdateForm(): JSX.Element | null {
     setDescription(e.target.value.replaceAll('\n', '<br/>'));
 
   return (
-    <div className="AddForm">
+    <div className="AUForm">
       <Navbar />
-      <form className="AddForm__form" onSubmit={submitHandler}>
-        <div className="AddForm__sideBySideBox">
-          <div className="AddForm__inputBox">
+      <form className="AUForm__form" onSubmit={submitHandler}>
+        <div className="AUForm__sideBySideBox">
+          <div className="AUForm__inputBox">
             <FormLabel text="Job Title" />
             <FormInputChange
               min={0}
@@ -127,7 +132,7 @@ function UpdateForm(): JSX.Element | null {
             />
           </div>
 
-          <div className="AddForm__inputBox">
+          <div className="AUForm__inputBox">
             <FormLabel text="Company Name" />
             <FormInputChange
               min={0}
@@ -138,31 +143,33 @@ function UpdateForm(): JSX.Element | null {
           </div>
         </div>
 
-        <div className="AddForm__sideBySideBox">
-          <div className="AddForm__inputBox">
+        <div className="AUForm__sideBySideBox">
+          <div className="AUForm__inputBox">
             <FormLabel text="Company Website Link" />
             <FormInputChange
               min={0}
               max={30}
               value={websiteLink}
               onChange={websiteLinkChangeHandler}
+              type="url"
             />
           </div>
 
-          <div className="AddForm__inputBox">
+          <div className="AUForm__inputBox">
             <FormLabel text="Job Application Link" />
             <FormInputChange
               min={0}
               max={30}
               value={applicationLink}
               onChange={applicationLinkChangeHandler}
+              type="url"
             />
           </div>
         </div>
 
-        <div className="AddForm__inputBox">
+        <div className="AUForm__inputBox">
           <FormLabel text="Job Type" />
-          <div className="AddForm__optionsBox">
+          <div className="AUForm__optionsBox">
             {JobTypes.map((jobType) => (
               <FormOption
                 condition={jobType === selectedType}
@@ -174,8 +181,8 @@ function UpdateForm(): JSX.Element | null {
           </div>
         </div>
 
-        <div className="AddForm__3SideBySideBox">
-          <div className="AddForm__inputBox">
+        <div className="AUForm__3SideBySideBox">
+          <div className="AUForm__inputBox">
             <FormLabel text="Job Category" />
             <FormInputChange
               min={0}
@@ -185,7 +192,7 @@ function UpdateForm(): JSX.Element | null {
             />
           </div>
 
-          <div className="AddForm__inputBox">
+          <div className="AUForm__inputBox">
             <FormLabel text="Job Region" />
             <FormInputChange
               min={0}
@@ -195,7 +202,7 @@ function UpdateForm(): JSX.Element | null {
             />
           </div>
 
-          <div className="AddForm__inputBox">
+          <div className="AUForm__inputBox">
             <FormLabel text="Job Timezones" />
             <FormInputChange
               min={0}
@@ -206,10 +213,10 @@ function UpdateForm(): JSX.Element | null {
           </div>
         </div>
 
-        <div className="AddForm__inputBox">
+        <div className="AUForm__inputBox">
           <FormLabel text="Job Description" />
           <textarea
-            className="AddForm__textarea"
+            className="AUForm__textarea"
             minLength={300}
             value={description.replaceAll('<br/>', '\n')}
             onChange={textAreaChangeHandler}

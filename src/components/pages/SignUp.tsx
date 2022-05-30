@@ -2,21 +2,28 @@ import SignInput from '../SignInput';
 import Context from '../../context';
 import Footer from '../Footer';
 import Navbar from '../Navbar';
+import Error from '../Error';
 import api from '../../api';
 import jwtDecode from 'jwt-decode';
 import { Link, useNavigate } from 'react-router-dom';
 import { FormEventHandler, useContext, useRef, useState } from 'react';
 import { UserType } from '../../data';
-import Error from '../Error';
+import SignButton from '../SignButton';
+import SignTitle from '../SignTitle';
 
-function SignUp(): JSX.Element {
-  const { userSetter } = useContext(Context);
+function SignUp(): JSX.Element | null {
+  const { userSetter, user } = useContext(Context);
   const [operating, setOperating] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const navigate = useNavigate();
   const name = useRef() as React.MutableRefObject<HTMLInputElement>;
   const email = useRef() as React.MutableRefObject<HTMLInputElement>;
   const password = useRef() as React.MutableRefObject<HTMLInputElement>;
+
+  if (user) {
+    navigate(`/user/account/${user.name}`, { replace: true });
+    return null;
+  }
 
   const submitHandler: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
@@ -47,11 +54,11 @@ function SignUp(): JSX.Element {
   };
 
   return (
-    <div className="signIn">
+    <div className="sign">
       <Navbar />
-      <main className="signIn__main">
-        <h1 className="signIn__title">Sign Up</h1>
-        <form className="signIn__form" onSubmit={submitHandler}>
+      <main className="sign__main">
+        <SignTitle value="Sign Up" />
+        <form className="sign__form" onSubmit={submitHandler}>
           {isError && (
             <Error
               msg="Invalid name, email, or password."
@@ -62,15 +69,13 @@ function SignUp(): JSX.Element {
           <SignInput type="email" plcHold="Email.." ref={email} />
           <SignInput type="password" plcHold="Password.." ref={password} />
 
-          <div className="signIn__btns">
+          <div className="sign__btns">
             {!operating && (
-              <Link to="/sign-in" className="signIn__btn">
+              <Link to="/sign-in" className="sign__btn">
                 Sign In?
               </Link>
             )}
-            <button className="signIn__btn" disabled={operating} type="submit">
-              Sign Up
-            </button>
+            <SignButton value="Sign Up" disabled={operating} />
           </div>
         </form>
       </main>

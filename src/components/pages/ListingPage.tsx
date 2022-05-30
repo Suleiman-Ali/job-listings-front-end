@@ -6,9 +6,7 @@ import parse from 'html-react-parser';
 import { useLocation } from 'react-router-dom';
 import { ListingType } from '../../data';
 
-const prefixLink = (str: string): string => 'https://' + str;
-
-function ListingPage(): JSX.Element {
+function ListingPage(): JSX.Element | null {
   const { state } = useLocation();
   const listing = state as ListingType;
   let date: string | string[] = new Date(listing.jobDate)
@@ -34,11 +32,11 @@ function ListingPage(): JSX.Element {
 
         <div className="listingPageBox__flex">
           <ListingPageLink
-            href={prefixLink(listing.companyWebsite)}
+            href={listing.companyWebsite}
             text={`${listing.companyName} website`}
           />
           <ListingPageLink
-            href={prefixLink(listing.jobApplicationLink)}
+            href={listing.jobApplicationLink}
             text="Apply for the job"
           />
         </div>
@@ -48,7 +46,7 @@ function ListingPage(): JSX.Element {
         </p>
 
         <ListingPageLink
-          href={prefixLink(listing.jobApplicationLink)}
+          href={listing.jobApplicationLink}
           text="Apply for the job"
         />
       </div>

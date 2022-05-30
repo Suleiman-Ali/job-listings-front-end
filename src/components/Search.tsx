@@ -1,4 +1,5 @@
 import Context from '../context';
+import SearchOption from './SearchOption';
 import {
   ChangeEvent,
   FormEvent,
@@ -56,13 +57,13 @@ function Search(): JSX.Element {
         <div className="search__innerBox">
           {/* prettier-ignore */}
           <select className="search__options" value={selectedJobType} onChange={selectChange}>
-          <option className='search__option' value="All-Jobs">All-Jobs</option>
-          <option className='search__option' value="Full-Time">Full-Time</option>
-          <option className='search__option' value="Part-Time">Part-Time</option>
-          <option className='search__option' value="Contract">Contract</option>
-          <option className='search__option' value="Volunteer">Volunteer</option>
-          <option className='search__option' value="Internship">Internship</option>
-          <option className='search__option' value="Temporary">Temporary</option>
+            <SearchOption value='All-Jobs'/>
+            <SearchOption value='Full-Time'/>
+            <SearchOption value='Part-Time'/>
+            <SearchOption value='Contract'/>
+            <SearchOption value='Volunteer'/>
+            <SearchOption value='Internship'/>
+            <SearchOption value='Temporary'/>
         </select>
 
           {currentKeyword && (

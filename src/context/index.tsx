@@ -1,7 +1,7 @@
 import jwtDecode from 'jwt-decode';
 import { ReactNode } from 'react';
-import { createContext, useState, useEffect } from 'react';
 import api from '../api';
+import { createContext, useState, useEffect } from 'react';
 import { ListingType, UserType } from '../data';
 
 interface ContextValues {

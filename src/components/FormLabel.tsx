@@ -3,7 +3,7 @@ interface FormLabelProps {
 }
 
 function FormLabel({ text }: FormLabelProps): JSX.Element {
-  return <label className="AddForm__label">{text}</label>;
+  return <label className="AUForm__label">{text}</label>;
 }
 
 export default FormLabel;

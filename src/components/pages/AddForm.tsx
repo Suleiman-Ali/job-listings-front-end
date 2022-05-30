@@ -4,13 +4,13 @@ import FormInputRefed from '../FormInputRefed';
 import FormLabel from '../FormLabel';
 import FormOption from '../FormOption';
 import Footer from '../Footer';
+import FormButtons from '../FormButtons';
 import api from '../../api';
 import { FormEventHandler, useContext, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { JobTypes, ListingType } from '../../data';
-import FormButtons from '../FormButtons';
 
-function AddForm(): JSX.Element | null {
+function AUForm(): JSX.Element | null {
   const { user, addListing } = useContext(Context);
   const navigate = useNavigate();
   const [selectedType, setSelectedType] = useState<string>(JobTypes[0]);
@@ -32,7 +32,7 @@ function AddForm(): JSX.Element | null {
     event.preventDefault();
 
     const listing = {
-      ownerId: user?._id,
+      ownerId: user._id,
       jobTitle: title.current.value,
       jobType: selectedType,
       jobRegion: region.current.value,
@@ -63,15 +63,15 @@ function AddForm(): JSX.Element | null {
     setSelectedType(JobTypes[0]);
 
     addListing(data);
-    navigate(`/user/account/${user?.name}`, { replace: true });
+    navigate(`/user/account/${user.name}`, { replace: true });
   };
 
   return (
-    <div className="AddForm">
+    <div className="AUForm">
       <Navbar />
-      <form className="AddForm__form" onSubmit={submitHandler}>
-        <div className="AddForm__sideBySideBox">
-          <div className="AddForm__inputBox">
+      <form className="AUForm__form" onSubmit={submitHandler}>
+        <div className="AUForm__sideBySideBox">
+          <div className="AUForm__inputBox">
             <FormLabel text="Job Title" />
             <FormInputRefed
               min={0}
@@ -81,7 +81,7 @@ function AddForm(): JSX.Element | null {
             />
           </div>
 
-          <div className="AddForm__inputBox">
+          <div className="AUForm__inputBox">
             <FormLabel text="Company Name" />
             <FormInputRefed
               min={0}
@@ -92,31 +92,33 @@ function AddForm(): JSX.Element | null {
           </div>
         </div>
 
-        <div className="AddForm__sideBySideBox">
-          <div className="AddForm__inputBox">
+        <div className="AUForm__sideBySideBox">
+          <div className="AUForm__inputBox">
             <FormLabel text="Company Website Link" />
             <FormInputRefed
               min={0}
               max={30}
               plcHold="i.e google.com"
               ref={websiteLink}
+              type="url"
             />
           </div>
 
-          <div className="AddForm__inputBox">
+          <div className="AUForm__inputBox">
             <FormLabel text="Job Application Link" />
             <FormInputRefed
               min={0}
               max={30}
               plcHold="i.e google.com"
               ref={applicationLink}
+              type="url"
             />
           </div>
         </div>
 
-        <div className="AddForm__inputBox">
+        <div className="AUForm__inputBox">
           <FormLabel text="Job Type" />
-          <div className="AddForm__optionsBox">
+          <div className="AUForm__optionsBox">
             {JobTypes.map((jobType) => (
               <FormOption
                 condition={jobType === selectedType}
@@ -128,8 +130,8 @@ function AddForm(): JSX.Element | null {
           </div>
         </div>
 
-        <div className="AddForm__3SideBySideBox">
-          <div className="AddForm__inputBox">
+        <div className="AUForm__3SideBySideBox">
+          <div className="AUForm__inputBox">
             <FormLabel text="Job Category" />
             <FormInputRefed
               min={0}
@@ -139,12 +141,12 @@ function AddForm(): JSX.Element | null {
             />
           </div>
 
-          <div className="AddForm__inputBox">
+          <div className="AUForm__inputBox">
             <FormLabel text="Job Region" />
             <FormInputRefed min={0} max={30} plcHold="i.e USA" ref={region} />
           </div>
 
-          <div className="AddForm__inputBox">
+          <div className="AUForm__inputBox">
             <FormLabel text="Job Timezone" />
             <FormInputRefed
               min={0}
@@ -155,10 +157,10 @@ function AddForm(): JSX.Element | null {
           </div>
         </div>
 
-        <div className="AddForm__inputBox">
+        <div className="AUForm__inputBox">
           <FormLabel text="Job Description" />
           <textarea
-            className="AddForm__textarea"
+            className="AUForm__textarea"
             placeholder="
           - Talk about the Role
           - Talk about the Role Responsibilities
@@ -179,4 +181,4 @@ function AddForm(): JSX.Element | null {
   );
 }
 
-export default AddForm;
+export default AUForm;

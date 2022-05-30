@@ -4,13 +4,14 @@ interface FormInputRefedProps {
   min: number;
   max: number;
   plcHold: string;
+  type?: string;
 }
 
 const FormInputRefed = forwardRef<HTMLInputElement, FormInputRefedProps>(
   (props, ref) => (
     <input
-      className="AddForm__input"
-      type="text"
+      className="AUForm__input"
+      type={props.type || 'text'}
       min={props.min}
       max={props.max}
       placeholder={props.plcHold}
