@@ -26,7 +26,7 @@ function Listing({ listing }: ListingProps): JSX.Element {
   date = `${date[1]} ${date[2]}`;
 
   const userOwnsListing = user?._id === listing.ownerId;
-  const userOwnUserPage = location.pathname === `/user/account/${user?.name}`;
+  const userOwnUserPage = location.pathname.includes(`/user/account/`);
 
   const deleteHandler = async () => {
     deleteListing(listing);
