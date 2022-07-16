@@ -1,6 +1,6 @@
 # Job Listings 💼
 
-Job Listings is an app where you can users can post and look for new jobs, it is similar to Weworkremotely.
+Job Listings is an app where users can post and look for new jobs, it is similar to Weworkremotely.
 
 ### Built Using
 - HTML with JSX
