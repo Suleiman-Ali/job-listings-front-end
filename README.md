@@ -8,21 +8,11 @@ Job Listings is an app where users can post and look for new jobs, it is similar
 
 
 ### Entire App is Built Using
-- HTML with JSX
-- CSS with SCSS
-- JavaScript 
+- HTML
+- SASS 
 - Typescript 
 - ReactJs
-- Axios
 - NodeJs
 - MongoDB
 - Mongoose
 - Express
-- Bootstrap Icons
-- html-react-parser
-- jwt-decode
-- Bcrypt
-- Compression
-- Config
-- Helmet
-- Jsonwebtoken
