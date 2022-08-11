@@ -7,7 +7,7 @@ Job Listings is an app where users can post and look for new jobs, it is similar
 ![Alt text](./site-userpage-image.png)
 
 
-### Entire App is Built Using
+### Technologies
 - HTML
 - SASS 
 - Typescript 
