@@ -2,7 +2,7 @@ import jwtDecode from 'jwt-decode';
 import api from '../api';
 import { ReactNode } from 'react';
 import { createContext, useState, useEffect } from 'react';
-import { ListingType, UserType } from '../data';
+import { listings as initialListings, ListingType, UserType } from '../data';
 
 interface ContextValues {
   listings: ListingType[];
@@ -29,7 +29,7 @@ const Context = createContext<ContextValues>(undefined!);
 export function ContextProvider({
   children,
 }: ContextProviderProps): JSX.Element {
-  const [listings, setListings] = useState<ListingType[]>([]);
+  const [listings, setListings] = useState<ListingType[]>(initialListings);
   const [userListings, setUserListings] = useState<ListingType[]>([]);
   const userInput: UserType | undefined = localStorage.getItem('LIST_JWT')
     ? jwtDecode<UserType>(localStorage.getItem('LIST_JWT') as string)

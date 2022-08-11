@@ -24,11 +24,9 @@ function Home(): JSX.Element {
       <Navbar />
       <main className="home__main">
         <Search />
-        {loadingHome && <Loading />}
-        {!loadingHome && listingsView.length > 0 && (
-          <Listings listings={listingsView} />
-        )}
+        {listingsView.length > 0 && <Listings listings={listingsView} />}
         {!loadingHome && listingsView.length <= 0 && <NotfoundMessage />}
+        {loadingHome && <Loading />}
       </main>
       <Footer />
     </div>
